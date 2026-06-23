@@ -1,0 +1,18 @@
+# E-Shop Learning Project
+
+This is an E-commerce web application I'm building as a personal project to learn and practice **ASP.NET Core 8** and professional software development principles.
+
+## Project Goal
+My main objective with this project is to gain hands-on experience with:
+- Mastering **ASP.NET Core 8** concepts.
+- Implementing **Clean Architecture**.
+- Working with **Entity Framework Core** and SQL Server.
+- Understanding project structure and modular development.
+
+## Tech Stack
+- **Framework:** ASP.NET Core 8
+- **ORM:** Entity Framework Core
+- **Database:** SQL Server
+
+## Status
+This project is currently under development. I'm actively adding new features (like user authentication, product management, etc.) as I progress with my learning path.
