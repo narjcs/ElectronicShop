@@ -6,8 +6,8 @@ namespace EShop.Data.DTOs.Account
     {
         [Display(Name = "شماره موبایل")]
         [Required(ErrorMessage = "لطفا {0} را وارد کنید")]
-        [MaxLength(12, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
-        [MinLength(12, ErrorMessage = "{0} نمی تواند کمتر از {1} کاراکتر باشد")]
+        [MaxLength(11, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
+        [MinLength(11, ErrorMessage = "{0} نمی تواند کمتر از {1} کاراکتر باشد")]
         public string MobileNumber { get; set; }
     }
 }

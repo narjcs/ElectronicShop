@@ -9,5 +9,6 @@ namespace EShop.Data.DTOs.Account
         [MaxLength(5, ErrorMessage = "{0} نمی تواند بیشتر از {1} کاراکتر باشد")]
         [MinLength(5, ErrorMessage = "{0} نمی تواند کمتر از {1} کاراکتر باشد")]
         public string ActivationCode { get; set; }
+        public string? ReturnUrl { get; set; }
     }
 }
