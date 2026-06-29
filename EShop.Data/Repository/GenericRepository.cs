@@ -1,69 +1,83 @@
 ﻿
 
+using EShop.Data.Context;
 using EShop.Data.Entities.Common;
+using Microsoft.EntityFrameworkCore;
 
 namespace EShop.Data.Repository
 {
     public class GenericRepository<TEntity> : IGenericRepository<TEntity> where TEntity : BaseEntity
     {
-        public Task AddEntity(TEntity entity)
+        private readonly ApplicationDbContext _dbContext;
+        private readonly DbSet<TEntity> _dbSet;
+        public GenericRepository(ApplicationDbContext dbContext)
         {
-            throw new NotImplementedException();
+            _dbContext = dbContext;
+            this._dbSet = _dbContext.Set<TEntity>();
+        }
+        public async Task AddEntity(TEntity entity)
+        {
+            entity.CreateDate = DateTime.Now;
+            entity.LastUpdateDate = DateTime.Now;
+            await _dbSet.AddAsync(entity);
         }
 
-        public Task AddRangeEntities(List<TEntity> entities)
+        public async Task AddRangeEntities(List<TEntity> entities)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task AddRengeEntities(List<TEntity> entities)
-        {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+            {
+                entity.CreateDate = DateTime.Now;
+                entity.LastUpdateDate = DateTime.Now;
+            }
+            await _dbSet.AddRangeAsync(entities);
         }
 
         public void DeleteEntity(TEntity entity)
         {
-            throw new NotImplementedException();
+            entity.IsDeleted = true;
+            EditEntity(entity);
         }
 
-        public Task DeletePermanent(TEntity entity)
+        public void DeletePermanent(TEntity entity)
         {
-            throw new NotImplementedException();
+            _dbSet.Remove(entity);
         }
 
         public void DeleteRangeEntities(List<TEntity> entities)
         {
-            throw new NotImplementedException();
+            foreach (var entity in entities)
+            {
+                DeleteEntity(entity);
+            }
         }
 
-        public void DeleteRangeEtities(List<TEntity> entities)
+        public async ValueTask DisposeAsync()
         {
-            throw new NotImplementedException();
-        }
-
-        public ValueTask DisposeAsync()
-        {
-            throw new NotImplementedException();
+            if (_dbContext != null)
+            {
+                await _dbContext.DisposeAsync();
+            }
         }
 
         public void EditEntity(TEntity entity)
         {
-            throw new NotImplementedException();
+            entity.LastUpdateDate = DateTime.Now;
+            _dbSet.Update(entity);
         }
 
-        public Task<TEntity> GetEntityById(long id)
+        public async Task<TEntity?> GetEntityById(long id)
         {
-            throw new NotImplementedException();
+            return await _dbSet.SingleOrDefaultAsync(d => d.Id == id);
         }
 
         public IQueryable<TEntity> GetQuery()
         {
-            throw new NotImplementedException();
+            return _dbSet.AsQueryable();
         }
 
-        public Task SaveAsync()
+        public async Task SaveAsync()
         {
-            throw new NotImplementedException();
+            await _dbContext.SaveChangesAsync();
         }
     }
 }
